@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nutripic/view_models/camera_view_model.dart';
+import 'package:nutripic/view_models/camerawesome_view.dart';
 
 class CameraView extends StatelessWidget {
   const CameraView({super.key});
@@ -6,7 +8,7 @@ class CameraView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('camera view'),
+      child: CameraAwesome(),
     );
   }
 }
