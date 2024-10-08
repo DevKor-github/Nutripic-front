@@ -1,13 +1,16 @@
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/bottom_navigator_bar.dart';
 import 'package:nutripic/models/user_model.dart';
+import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
+import 'package:nutripic/view_models/diary/diary_view_model.dart';
 import 'package:nutripic/view_models/login_view_model.dart';
 import 'package:nutripic/view_models/signup_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
 import 'package:nutripic/views/signup_view.dart';
 import 'package:nutripic/views/camera_view.dart';
-import 'package:nutripic/views/diary_view.dart';
+import 'package:nutripic/views/diary/diary_post_view.dart';
+import 'package:nutripic/views/diary/diary_view.dart';
 import 'package:nutripic/views/login_view.dart';
 import 'package:nutripic/views/recipe_view.dart';
 import 'package:nutripic/views/refrigerator_view.dart';
@@ -59,8 +62,23 @@ class AppRouter {
               routes: [
                 GoRoute(
                   path: '/diary',
-                  builder: (context, state) => const DiaryView(),
-                )
+                  builder: (context, state) => ChangeNotifierProvider(
+                    create: (context) => DiaryViewModel(),
+                    child: const DiaryView(),
+                  ),
+                  routes: [
+                    GoRoute(
+                      path: 'post',
+                      builder: (context, state) {
+                        final imagePath = state.extra as String?;
+                        return ChangeNotifierProvider(
+                          create: (context) => DiaryPostViewModel(),
+                          child: DiaryPostView(imagePath: imagePath!),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
 
