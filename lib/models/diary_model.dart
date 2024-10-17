@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
-
-class Diary {
-  ///게시 날짜
-  DateTime? date;
-
-  ///게시물 아이디
-  String? diaryId;
-
-  ///게시물 본문
-  String? content;
-
-  ///게시물 사진 Url
-  String? imageUrl;
-
-  Diary({
-    this.date,
-    this.diaryId,
-    this.content,
-    this.imageUrl,
-  });
-}
+import 'package:nutripic/objects/diary.dart';
 
 class DiaryModel with ChangeNotifier {
-  final List<Diary> _diaries = [];
-  List<Diary> get diaries => _diaries;
+  // List<Diary> diaries = [];
+  Diary? diary;
+
+  /// 선택된 다이어리 데이터 리셋
+  void reset() {
+    diary = null;
+  }
+
+  // 임시 dummy data
+  Map<DateTime, List<Diary>> diaries = {
+    DateTime.utc(2024, 10, 22): [
+      Diary(diaryId: '1', content: '일'),
+      Diary(diaryId: '2', content: '이'),
+    ],
+    DateTime.utc(2024, 10, 24): [Diary(diaryId: '3', content: '삼')],
+  };
 }

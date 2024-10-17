@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nutripic/models/diary_model.dart';
+import 'package:nutripic/objects/diary.dart';
 
 class DiaryRecordViewModel extends ChangeNotifier {
   final List<Diary> diaryRecords;

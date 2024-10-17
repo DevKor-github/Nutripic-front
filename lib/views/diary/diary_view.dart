@@ -1,10 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:nutripic/components/custom_app_bar.dart';
-import 'package:nutripic/view_models/diary/diary_camera_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_view_model.dart';
-import 'package:nutripic/views/diary/diary_camera_view.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -33,7 +29,7 @@ class _DiaryViewState extends State<DiaryView> {
             },
             onDaySelected: (selectedDay, focusedDay) {
               diaryViewModel.updateSelectDay(selectedDay);
-              diaryViewModel.showDiaryRecordModal(context, selectedDay);
+              diaryViewModel.showDiaryRecordModal(selectedDay);
             },
             headerStyle: const HeaderStyle(
               formatButtonVisible: false,
@@ -72,7 +68,7 @@ class _DiaryViewState extends State<DiaryView> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          diaryViewModel.showCameraSelectModal(context);
+          diaryViewModel.showCameraSelectModal();
         },
       ),
     );

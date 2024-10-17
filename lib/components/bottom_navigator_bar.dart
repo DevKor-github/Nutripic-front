@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nutripic/utils/palette.dart';
 
 class BottomNavBar extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -11,14 +13,34 @@ class BottomNavBar extends StatelessWidget {
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
         enableFeedback: false,
-        selectedItemColor: Colors.green,
-        unselectedItemColor: Colors.black54,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.food_bank), label: '냉장고'),
-          BottomNavigationBarItem(icon: Icon(Icons.note_alt), label: '기록'),
-          BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: '카메라'),
-          BottomNavigationBarItem(icon: Icon(Icons.room_service), label: '레시피'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: '유저 정보'),
+        selectedItemColor: Palette.sub,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset('assets/icons/refrigerator.svg'),
+            activeIcon:
+                SvgPicture.asset('assets/icons/refrigerator_active.svg'),
+            label: '냉장고',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset('assets/icons/record.svg'),
+            activeIcon: SvgPicture.asset('assets/icons/record_active.svg'),
+            label: '기록',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset('assets/icons/add.svg'),
+            activeIcon: SvgPicture.asset('assets/icons/add_active.svg'),
+            label: '식재료 추가',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset('assets/icons/search.svg'),
+            activeIcon: SvgPicture.asset('assets/icons/search_active.svg'),
+            label: '레시피 찾기',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset('assets/icons/my.svg'),
+            activeIcon: SvgPicture.asset('assets/icons/my_active.svg'),
+            label: '마이',
+          ),
         ],
         currentIndex: navigationShell.currentIndex,
         onTap: (int index) => navigationShell.goBranch(index),
