@@ -1,28 +1,31 @@
 import 'package:go_router/go_router.dart';
 import 'package:nutripic/components/bottom_navigator_bar.dart';
+import 'package:nutripic/models/diary_model.dart';
 import 'package:nutripic/models/user_model.dart';
 import 'package:nutripic/view_models/diary/diary_post_view_model.dart';
 import 'package:nutripic/view_models/diary/diary_view_model.dart';
 import 'package:nutripic/view_models/login/login_view_model.dart';
 import 'package:nutripic/view_models/login/signup_view_model.dart';
+import 'package:nutripic/view_models/refrigerator/refrigerator_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_edit_view_model.dart';
 import 'package:nutripic/view_models/user_info/user_info_view_model.dart';
+import 'package:nutripic/views/diary/diary_view.dart';
 import 'package:nutripic/views/login/signup_view.dart';
 import 'package:nutripic/views/camera_view.dart';
 import 'package:nutripic/views/diary/diary_post_view.dart';
-import 'package:nutripic/views/diary_view.dart';
 import 'package:nutripic/views/login/login_view.dart';
 import 'package:nutripic/views/recipe_view.dart';
-import 'package:nutripic/views/refrigerator_view.dart';
+import 'package:nutripic/views/refrigerator/refrigerator_view.dart';
 import 'package:nutripic/views/user_info/user_edit_view.dart';
 import 'package:nutripic/views/user_info/user_info_view.dart';
 import 'package:provider/provider.dart';
 
 class AppRouter {
   final UserModel userModel;
-  AppRouter({required this.userModel});
+  final DiaryModel diaryModel;
+  AppRouter({required this.diaryModel, required this.userModel});
 
-  static GoRouter getRouter(UserModel userModel) {
+  static GoRouter getRouter(UserModel userModel, DiaryModel diaryModel) {
     return GoRouter(
       initialLocation: '/login',
       redirect: (context, state) {
@@ -52,7 +55,12 @@ class AppRouter {
               routes: [
                 GoRoute(
                   path: '/refrigerator',
-                  builder: (context, state) => const RefrigeratorView(),
+                  builder: (context, state) => ChangeNotifierProvider(
+                    create: (context) => RefrigeratorViewModel(
+                      context: context,
+                    ),
+                    child: const RefrigeratorView(),
+                  ),
                 )
               ],
             ),
@@ -63,17 +71,22 @@ class AppRouter {
                 GoRoute(
                   path: '/diary',
                   builder: (context, state) => ChangeNotifierProvider(
-                    create: (context) => DiaryViewModel(),
+                    create: (context) => DiaryViewModel(
+                      diaryModel: diaryModel,
+                      context: context,
+                    ),
                     child: const DiaryView(),
                   ),
                   routes: [
                     GoRoute(
                       path: 'post',
                       builder: (context, state) {
-                        final imagePath = state.extra as String?;
                         return ChangeNotifierProvider(
-                          create: (context) => DiaryPostViewModel(),
-                          child: DiaryPostView(imagePath: imagePath!),
+                          create: (context) => DiaryPostViewModel(
+                            diaryModel: diaryModel,
+                            context: context,
+                          ),
+                          child: const DiaryPostView(),
                         );
                       },
                     ),
